@@ -25,7 +25,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['https://hack4growth3forearth.herokuapp.com']
 
 
 # Application definition
@@ -47,9 +47,11 @@ INSTALLED_APPS = [
     #3rd Party
     'rest_framework',
     'rest_framework.authtoken',
-    'rest_auth', # new
+    'rest_auth',
     'corsheaders',
     'rest_framework_swagger',
+
+    'whitenoise.runserver_nostatic',
 ]
 
 MIDDLEWARE = [
@@ -130,15 +132,17 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
-
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
+STATICFILES_DIRS= [os.path.join(BASE_DIR,'static')]
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 AUTH_USER_MODEL = 'accounts.CustomUser'
 
 CORS_ORIGIN_WHITELIST = (
-    'http://localhost:8000','https://h4g3fe.herokuapp.com/ ','*')
+    'http://localhost:8000','https://h4g3fe.herokuapp.com/ ')
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES':[
