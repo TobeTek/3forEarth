@@ -14,8 +14,23 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+from django.conf import settings
+from django.conf.urls import url
+from rest_framework.schemas import get_schema_view
+from rest_framework.documentation import include_docs_urls 
+\
 
+API_TITLE = '3 For Earth API'
+API_DESCRIPTION = 'API support for non-profit green movement, #3ForEarth'
+
+schema_view = get_schema_view(title= '3ForEarth API')
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api-auth/', include('rest_framework.urls')),
+    path('api/v1/rest-auth/', include('rest_auth.urls')),
+    path('api/v1/accounts/', include('accounts.urls')),
+    path('api/v1/', include('trees.urls')),
+    path('docs/', include_docs_urls(title=API_TITLE, description=API_DESCRIPTION)),
+    path('schema/', schema_view)
 ]
